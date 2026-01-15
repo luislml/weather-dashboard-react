@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos base para ambos modos */
+html,
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease;
+  /* Transición suave */
+}
+
+/* Modo oscuro */
+body.dark {
+  @apply bg-space text-white;
+}
+
+/* Modo claro */
+body.light,
+body:not(.dark) {
+  @apply bg-light text-primary;
+}
+
+/* Estilos compartidos */
+.neon-text.dark {
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+}
+
+.neon-text.light {
+  color: #0ea5e9;
+  text-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
+}
+
+.glass-card.dark {
+  @apply backdrop-blur-md bg-white/5 border border-cyber/20;
+}
+
+.glass-card.light {
+  @apply backdrop-blur-md bg-blue-50/70 border border-accent/30;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
