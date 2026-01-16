@@ -2,10 +2,6 @@
   "name": "weather-dashboard-react",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "18.x",
-    "npm": "10.x"
-  },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/dom": "^10.4.1",

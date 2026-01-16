@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getRandomBackground } from '../utils/weatherBackgrounds';
 
 const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;
@@ -68,7 +68,7 @@ export default function useWeather() {
     };
 
     // Buscar por nombre de ciudad
-    const fetchCurrent = async (city) => {
+    const fetchCurrent = useCallback(async (city) => {
         setLoading(true);
         setError(null);
         try {
@@ -85,7 +85,6 @@ export default function useWeather() {
             setBackgroundImage(getRandomBackground(data.weather[0].id));
             setLastSearched(city);
 
-            // Cargar pronóstico y datos ambientales
             const forecastData = await fetchForecast(city);
             setForecast(forecastData);
 
@@ -99,7 +98,8 @@ export default function useWeather() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []); // No dependencias internas que cambien
+
 
     // Buscar por ubicación actual
     const fetchByLocation = () => {
@@ -144,7 +144,7 @@ export default function useWeather() {
     // Inicializar con Bogotá
     useEffect(() => {
         fetchCurrent('Bogotá');
-    }, []);
+    }, [fetchCurrent]);
 
     // Función para reintentar última búsqueda
     const retry = () => {
