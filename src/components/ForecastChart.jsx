@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
 
+// ✅ Tooltip adaptado a ambos modos
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
         return (
-            <div className="glass-card p-3 border-cyber/40">
-                <p className="font-bold text-neon">{label}</p>
+            <div className="glass-card p-3 dark:border-cyber/40 light:border-accent/40">
+                <p className="font-bold neon-text">{label}</p>
                 <p>{Math.round(data.temp)}°</p>
-                <p className="text-sm text-cyber/80 capitalize">{data.description}</p>
+                <p className="text-sm dark:text-cyber/80 light:text-secondary/80 capitalize">
+                    {data.description}
+                </p>
             </div>
         );
     }
@@ -22,7 +25,7 @@ export default function ForecastChart({ forecast }) {
     useEffect(() => {
         const updateWidth = () => {
             if (chartRef.current) {
-                setChartWidth(chartRef.current.clientWidth - 40); // Más margen
+                setChartWidth(chartRef.current.clientWidth - 40);
             }
         };
 
@@ -37,57 +40,73 @@ export default function ForecastChart({ forecast }) {
                 ref={chartRef}
                 className="mt-6 glass-card w-full h-48 flex items-center justify-center"
             >
-                <div className="text-cyber/70">Cargando gráfica...</div>
+                {/* ✅ Texto adaptado al tema */}
+                <div className="dark:text-cyber/70 light:text-secondary/70">
+                    Cargando gráfica...
+                </div>
             </div>
         );
     }
 
     const chartData = forecast.map(item => ({
-        day: new Date(item.dt_txt).toLocaleDateString('es', { weekday: 'short' }).slice(0, 3), // Solo 3 letras: "vie", "sáb"
+        day: new Date(item.dt_txt).toLocaleDateString('es', { weekday: 'short' }).slice(0, 3),
         temp: Math.round(item.main.temp),
         description: item.weather[0].description,
     }));
 
     const chartHeight = 160;
 
+    // ✅ Colores dinámicos para Recharts
+    const getLineColor = () => {
+        return document.documentElement.classList.contains('dark') ? '#00f0ff' : '#0ea5e9';
+    };
+
+    const getDotColor = () => {
+        return document.documentElement.classList.contains('dark') ? '#00b894' : '#0c4a6e';
+    };
+
+    const getXAxisColor = () => {
+        return document.documentElement.classList.contains('dark') ? '#0abdc6' : '#334155';
+    };
+
     return (
         <div className="mt-6 glass-card w-full" ref={chartRef}>
+            {/* ✅ Título con neón adaptado */}
             <h3 className="text-xl font-semibold mb-3 text-center neon-text">
                 Tendencia de Temperatura
             </h3>
 
-            {/* Contenedor con más padding */}
             <div className="px-6 py-3">
                 <LineChart width={chartWidth} height={chartHeight} data={chartData}>
                     <XAxis
                         dataKey="day"
-                        tick={{ fill: '#0abdc6', fontSize: 10 }} // Texto más pequeño
+                        tick={{
+                            fill: getXAxisColor(), // ✅ Color dinámico
+                            fontSize: 10
+                        }}
                         tickLine={false}
                         axisLine={false}
-                        interval={0} // Mostrar todos los días
-                        angle={-45} // Inclinar las etiquetas para ahorrar espacio
-                        textAnchor="end" // Alinear al final para evitar corte
+                        interval={0}
+                        angle={-45}
+                        textAnchor="end"
                     />
-                    <YAxis
-                        hide
-                        domain={['dataMin - 3', 'dataMax + 3']}
-                    />
+                    <YAxis hide domain={['dataMin - 3', 'dataMax + 3']} />
                     <Tooltip content={<CustomTooltip />} />
                     <Line
                         type="monotone"
                         dataKey="temp"
-                        stroke="#00f0ff"
+                        stroke={getLineColor()} // ✅ Línea dinámica
                         strokeWidth={3}
                         dot={{
                             r: 5,
-                            fill: '#00f0ff',
-                            stroke: '#00b894',
+                            fill: getLineColor(),
+                            stroke: getDotColor(),
                             strokeWidth: 2
                         }}
                         activeDot={{
                             r: 7,
-                            fill: '#00b894',
-                            stroke: '#00f0ff',
+                            fill: getDotColor(),
+                            stroke: getLineColor(),
                             strokeWidth: 2
                         }}
                     />

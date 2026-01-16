@@ -18,7 +18,7 @@ export default function WeatherCard({ weather }) {
                 className="mx-auto my-2 drop-shadow-[0_0_15px_rgba(0,240,255,0.5)] dark:drop-shadow-[0_0_15px_rgba(0,240,255,0.5)] light:drop-shadow-[0_0_10px_rgba(14,165,233,0.4)]"
             />
             <div className="text-5xl font-bold neon-text my-2">{temp}°</div>
-            <p className="capitalize text-cyber/90 dark:text-cyber/90 light:text-accent/90">
+            <p className="capitalize dark:text-cyber/90 light:text-accent/90">
                 {description}
             </p>
             <p className={`text-sm mt-2 ${'dark:text-cyber/70 light:text-secondary/80'

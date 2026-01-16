@@ -58,7 +58,7 @@ export default function EnvironmentalCard({ airPollution, uvIndex }) {
             </div>
 
             {(airPollution || uvIndex) && (
-                <div className="mt-4 text-xs text-cyber/60 text-center">
+                <div className="mt-4 text-xs text-center dark:text-cyber/60 light:text-secondary/70">
                     Datos en tiempo real · Recomendaciones de salud
                 </div>
             )}

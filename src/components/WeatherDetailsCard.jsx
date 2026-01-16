@@ -69,7 +69,7 @@ export default function WeatherDetailsCard({ weather }) {
                 </div>
             </div>
 
-            <div className="mt-3 text-xs text-cyber/60 text-center">
+            <div className="mt-3 text-xs text-center dark:text-cyber/60 light:text-secondary/70">
                 Datos meteorológicos técnicos · Actualizado en tiempo real
             </div>
         </div>
